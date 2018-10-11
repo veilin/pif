@@ -12,10 +12,10 @@ export class HomeComponent implements OnInit {
   quote: string;
   isLoading: boolean;
 
-  @LocalStorage() num: number;
+  @LocalStorage()
+  num: number;
 
-  constructor(private quoteService: QuoteService) {
-  }
+  constructor(private quoteService: QuoteService) {}
 
   ngOnInit() {
     this.isLoading = true;

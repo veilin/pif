@@ -6,14 +6,12 @@ import { LocalStorage } from 'ngx-store';
   providedIn: 'root'
 })
 export class ContractService {
+  @LocalStorage()
+  private contracts: IContract[];
 
-  @LocalStorage() private contracts: IContract[];
-
-  constructor() {
-  }
+  constructor() {}
 
   getContracts(): IContract[] {
     return this.contracts;
   }
-
 }

@@ -9,9 +9,7 @@ import { environment } from '@env/environment';
 export class ContractComponent implements OnInit {
   version: string = environment.version;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

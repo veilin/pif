@@ -4,9 +4,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ContractRoutingModule } from './contract-routing.module';
 import { ContractComponent } from './contract.component';
+import { AddEditContractComponent } from './add-edit-contract.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, ContractRoutingModule],
-  declarations: [ContractComponent]
+  declarations: [ContractComponent , AddEditContractComponent]
 })
 export class ContractModule {}

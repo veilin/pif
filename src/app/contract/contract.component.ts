@@ -11,15 +11,15 @@ import { UserType } from '@app/user-type.enum';
   styleUrls: ['./contract.component.scss']
 })
 export class ContractComponent implements OnInit {
-  @LocalStorage() contracts: IContract[] = [];
+  @LocalStorage()
+  contracts: IContract[] = [];
 
-  @LocalStorage() users: UserEntity[] = [];
+  @LocalStorage()
+  users: UserEntity[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
-
     //this.contracts = [];
 
     // if (this.contracts.findIndex((value) => {
@@ -42,7 +42,6 @@ export class ContractComponent implements OnInit {
     //       lng: 29.391064
     //     });
     // }
-
 
     //
     // this.contracts.push({
@@ -70,7 +69,8 @@ export class ContractComponent implements OnInit {
         name: 'United Nations',
         login: 'kofi.anan@un.org',
         type: UserType.Investor
-      }];
+      }
+    ];
   }
 
   removeContract(contract: IContract) {

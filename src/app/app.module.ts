@@ -16,6 +16,8 @@ import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ContractComponent } from './contract/contract.component';
+import { OverviewComponent } from './dashboard/overview.component';
+import { OverviewModule } from './dashboard/overview.module';
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { ContractComponent } from './contract/contract.component';
     ShellModule,
     HomeModule,
     ContractModule,
+    OverviewModule,
     LoginModule,
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],

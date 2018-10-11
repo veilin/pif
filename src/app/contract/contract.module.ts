@@ -11,5 +11,4 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, TranslateModule, ContractRoutingModule, FormsModule],
   declarations: [ContractComponent, AddEditContractComponent]
 })
-export class ContractModule {
-}
+export class ContractModule {}

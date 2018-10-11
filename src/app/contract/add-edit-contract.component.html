@@ -5,13 +5,13 @@
       <hr/>
     </h1>
 
-    <div id="products">
+    <div>
       <div class="card card-default">
         <div class="card-header">
           <h4 class="card-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
               <i class="glyphicon glyphicon-search text-gold"></i>
-              <b>SECTION I: SUMMARY (TO BE COMPLETED BY APPLICANT)</b>
+              <b>SECTION I: PROPOSAL SUMMARY (TO BE COMPLETED BY APPLICANT)</b>
             </a>
           </h4>
         </div>
@@ -27,30 +27,24 @@
               <div class="col-md-2 col-lg-3">
                 <div class="form-group">
                   <label class="control-label">Required Budget</label>
-                  <input type="text" [(ngModel)]="contract.value" class="form-control"/>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">$</div>
+                    </div>
+                    <input type="text" [(ngModel)]="contract.value" class="form-control"/>
+                  </div>
                 </div>
               </div>
-              <!--<div class="col-md-1 col-lg-4">-->
-              <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-              <!--&lt;!&ndash;<label class="control-label">First Name</label>&ndash;&gt;-->
-              <!--&lt;!&ndash;<input type="text" class="form-control"/>&ndash;&gt;-->
-              <!--&lt;!&ndash;</div>&ndash;&gt;-->
-              <!--</div>-->
-              <!--<div class="col-md-1 col-lg-1">-->
-              <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-              <!--&lt;!&ndash;<label class="control-label">Middle.I</label>&ndash;&gt;-->
-              <!--&lt;!&ndash;<input class="form-control" type="text"/>&ndash;&gt;-->
-              <!--&lt;!&ndash;</div>&ndash;&gt;-->
-              <!--</div>-->
               <div class="col-md-2 col-lg-3">
                 <div class="form-group">
                   <label class="control-label">Delivery due date</label>
                   <div class="input-group date">
                     <input class="form-control" type="text"/>
                     <span class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <i class="fa fa-calendar"></i>
-                                    </button></span>
+                      <button class="btn btn-outline-secondary" type="button">
+                          <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -69,47 +63,25 @@
               <div class="col-md-12 col-lg-12">
                 <div class="form-group">
                   <label class="control-label">Proposal goals and justification</label>
-                  <textarea [(ngModel)]="contract.description" rows="6" class="form-control"></textarea>
+                  <textarea [(ngModel)]="contract.goal" rows="6" class="form-control"></textarea>
                 </div>
               </div>
             </div>
 
-            <!--<div class="row">-->
-              <!--<div class="col-md-4 col-lg-4">-->
-                <!--<div class="form-group">-->
-                  <!--<label class="control-label">Mailing Address</label>-->
-                  <!--<input type="text" class="form-control"/>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="col-md-2 col-lg-3">-->
-                <!--<div class="form-group">-->
-                  <!--<label class="control-label">City</label>-->
-                  <!--<input type="text" class="form-control"/>-->
-                <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="col-md-3 col-lg-3">-->
-                <!--<div class="form-group">-->
-                  <!--<label class="control-label">State</label>-->
-                  <!--<input type="text" class="form-control"/>-->
-                <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="col-md-3 col-lg-2">-->
-                <!--<div class="form-group">-->
-                  <!--<label class="control-label">Zip Code</label>-->
-                  <!--<input type="text" class="form-control"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-              <!--<div class="col-md-3 col-lg-12">-->
-                <!--<div class="form-group">-->
-                  <!--<label class="control-label">High School College/Name</label>-->
-                  <!--<input type="text" class="form-control"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label class="control-label">Proposal category</label>
+                  <select class="form-control">
+                    <option>Agriculture</option>
+                    <option>Community upliftment project</option>
+                    <option>Education/training</option>
+                    <option>Service Delivery</option>
+                    <option>Community facility restoration</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +90,7 @@
           <h4 class="card-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
               <i class="glyphicon glyphicon-lock text-gold"></i>
-              <b>SECTION II: TO BE COMPLETED BY TEACHER OR INSTRUCTOR</b>
+              <b>SECTION II: PARTIES</b>
             </a>
           </h4>
         </div>
@@ -126,10 +98,38 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-12">
-                <p>As a part of the admissions process at the University of University Name School of the Arts, all
-                  applicants are asked to submit this recommendation form. We appreciate any comments and evaluations
-                  that you would like to offer about this candidate. Feel free to attach comments or descriptions. A
-                  prompt reply is requested.</p>
+                <p>Please keep in mind that your proposal will be <b>verified</b> by an unbiased <b>third party
+                  mediator</b> of your choice. </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label class="control-label">Chosen mediator</label>
+                  <select class="form-control">
+                    <option *ngFor="let user of users" value={{user.login}}>{{user.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-default">
+        <div class="card-header">
+          <h4 class="card-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              <i class="glyphicon glyphicon-lock text-gold"></i>
+              <b>SECTION III: CONTACT DETAILS</b>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse3" class="collapse show">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <p>As a part of the admissions process, all applicants are asked to submit this recommendation form.
+                  We appreciate any comments and evaluations that you would like to offer about this candidate. </p>
               </div>
             </div>
 
@@ -143,7 +143,7 @@
 
               <div class="col-md-4 col-lg-4">
                 <div class="form-group">
-                  <label class="control-label">first</label>
+                  <label class="control-label">First Name</label>
                   <input type="text" class="form-control"/>
                 </div>
               </div>
@@ -174,7 +174,7 @@
 
               <div class="col-md-4 col-lg-6">
                 <div class="form-group">
-                  <label class="control-label">School/Organization</label>
+                  <label class="control-label">Organization</label>
                   <input type="text" class="form-control"/>
                 </div>
               </div>
@@ -185,7 +185,7 @@
             <div class="row">
               <div class="col-md-3 col-lg-4">
                 <div class="form-group">
-                  <label class="control-label">School/Organization Address</label>
+                  <label class="control-label">Organization Address</label>
                   <input type="text" class="form-control"/>
                 </div>
               </div>
@@ -197,7 +197,7 @@
               </div>
               <div class="col-md-4 col-lg-3">
                 <div class="form-group">
-                  <label class="control-label">State</label>
+                  <label class="control-label">State/Province</label>
                   <input type="text" class="form-control"/>
                 </div>
               </div>
@@ -474,12 +474,10 @@
       </div>
       <br/>
     </div>
-
     <div class="row">
       <div class="col-lg-12">
         <div class="pull-right">
-          <a href="#" class="btn btn-success btn-lg" id="btnSubmit"><i class="fa fa-save"></i> Save</a>
-          <a class="btn btn-warning btn-lg" href="#" id="btnToTop"><i class="fa fa-arrow-up"></i> Top</a>
+          <button href="#" class="btn btn-success btn-lg" (click)="saveContract()" id="btnSubmit"><i class="fa fa-save"></i> Save</button>
         </div>
       </div>
     </div>

@@ -9,13 +9,18 @@
     <div id="products" class="row view-group">
       <div class="item col-xs-4 col-lg-4 list-group-item"
            *ngFor="let proposal of contracts; trackBy : trackContractById">
-        <div class="thumbnail card">
-          <div class="img-event">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d829276.1550202352!2d31.118719800382028!3d-27.593468494534104!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1539259402060" width="400" height="255" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <div class="card"
+             style="position:relative;display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;min-width:0;word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid rgba(0,0,0,.125);
+             ">
+          <div class="img-event" style="min-width: 400px;min-height: 250px;">
+            <img
+              src="https://maps.googleapis.com/maps/api/staticmap?center={{proposal.lat}},{{proposal.lng}}&zoom=13&size=400x250&maptype=roadmap&markers=color:blue|label:P|{{proposal.lat}},{{proposal.lng}}&key=AIzaSyALUeYBJmAIXi-PYYeO89H-zmLE-UPFF0I"
+              style="border:0; padding: 0;margin: 0;"/>
           </div>
           <div class="caption card-body">
             <h2 class="group card-title inner list-group-item-heading">{{proposal.name}}</h2>
             <p class="group inner list-group-item-text">{{proposal.description}}</p>
+            <p class="group inner list-group-item-text">{{proposal.goal}}</p>
             <div class="row">
               <div class="col-xs-12 col-md-6">
                 <p class="lead font-weight-bold">$ {{proposal.value}}</p>
@@ -23,7 +28,8 @@
             </div>
             <div class="row">
               <div class="col-xs-12 col-md-6">
-                <a class="lead btn btn-success" href="" routerLink="">Fund this proposal!</a>
+                <button class="lead btn btn-success">Fund this proposal!</button>
+                <button class="lead btn btn-danger" (click)="removeContract(proposal)">Delete</button>
               </div>
             </div>
           </div>

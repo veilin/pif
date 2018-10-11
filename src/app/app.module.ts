@@ -11,10 +11,11 @@ import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
-import { AboutModule } from './about/about.module';
+import { ContractModule } from './contract/contract.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ContractComponent } from './contract/contract.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     ShellModule,
     HomeModule,
-    AboutModule,
+    ContractModule,
     LoginModule,
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],

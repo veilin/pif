@@ -17,18 +17,25 @@ export class ContractComponent implements OnInit {
 
   ngOnInit() {
 
-    let contract: IContract;
-    contract = {
+    this.contracts.push({
       id: 0,
       value: 10347.21,
       description: 'This ia a dslkfhsdlkfhsdklflksdhfsdhflk kdsflk sdhflkh sdlkhflsdkhfk sldhfkhs khdsfkh sdlkhfkl ' +
         'sdhflhsdlkfh skldhfkl hsdlkfh sldkhf lsdkhfl khsd' +
         'sdlkfjsd kjflksdj lkfjsdkljflk jsdkfj ksldjfskl dflsdhflksdufksdhfksdlkhf lkdshf d' +
         'dsklf jsdlkfj lksdjflkjs dlkfjs dlkjflksd jflkjs dlkjfsldk jflksdjf klsdjf lksdjf kljsdklfj ksldjfkl sdlkfj',
-      name: 'Contract name'
-    };
+      name: 'Funding for development of grain fermentation plant in rural Lynnwood'
+    });
 
-    this.contracts.push(contract);
+    this.contracts.push({
+      id: 0,
+      value: 10347.21,
+      description: 'This ia a dslkfhsdlkfhsdklflksdhfsdhflk kdsflk sdhflkh sdlkhflsdkhfk sldhfkhs khdsfkh sdlkhfkl ' +
+        'sdhflhsdlkfh skldhfkl hsdlkfh sldkhf lsdkhfl khsd' +
+        'sdlkfjsd kjflksdj lkfjsdkljflk jsdkfj ksldjfskl dflsdhflksdufksdhfksdlkhf lkdshf d' +
+        'dsklf jsdlkfj lksdjflkjs dlkfjs dlkjflksd jflkjs dlkjfsldk jflksdjf klsdjf lksdjf kljsdklfj ksldjfkl sdlkfj',
+      name: 'This is a test'
+    });
 
   }
 

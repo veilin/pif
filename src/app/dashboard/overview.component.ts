@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
 import { UserEntity } from '@app/user-entity';
+import { UserType } from '@app/user-type.enum';
 
 import { AuthenticationService } from '@app/core';
 import { ContractStatus } from '@app/contract-status.enum';
@@ -11,6 +12,17 @@ import * as d3 from 'd3-selection';
 import * as d3Scale from 'd3-scale';
 import * as d3Shape from 'd3-shape';
 
+class Chart {
+  width: number;
+  height: number;
+  svg: any;
+  radius: number;
+  arc: any;
+  pie: any;
+  color: any;
+  g: any;
+}
+
 @Component({
   selector: 'app-overview',
   encapsulation: ViewEncapsulation.None,
@@ -19,79 +31,92 @@ import * as d3Shape from 'd3-shape';
 })
 export class OverviewComponent implements OnInit {
   title = 'Donut Chart';
+  contracts: IContract[] = [];
 
-  private width: number;
-  private height: number;
-
-  private svg: any; // TODO replace all `any` by the right type
-
-  private radius: number;
-
-  private arc: any;
-  private pie: any;
-  private color: any;
-
-  private g: any;
+  private username: string;
+  private userType: UserType = undefined;
 
   constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {}
 
   ngOnInit() {
-    var POPULATION = [
-      { age: '<5', population: 2704659 },
-      { age: '5-13', population: 4499890 },
-      { age: '14-17', population: 2159981 },
-      { age: '18-24', population: 3853788 },
-      { age: '25-44', population: 14106543 },
-      { age: '45-64', population: 8819342 },
-      { age: '≥65', population: 612463 }
-    ];
+    this.username = this.authenticationService.credentials.username;
+    this.userType = this.authenticationService.getUserType(this.username);
 
-    this.initSvg();
-    this.drawChart(POPULATION);
+    var allContracts = this.contractService.getAllContracts();
+    var allContractsChartData = this.extractChartData(allContracts);
+    this.drawChart('#allContractsSVG', allContractsChartData);
+
+    var myContracts = this.contractService.getMyContracts(
+      this.authenticationService.credentials.username,
+      this.userType
+    );
+    var myContractsChartData = this.extractChartData(myContracts);
+    this.drawChart('#myContractsSVG', myContractsChartData);
   }
 
-  private initSvg() {
-    this.svg = d3.select('svg');
+  private extractChartData(contracts: IContract[]) {
+    var data: any = [];
+    for (let contract of contracts) {
+      var entry: any = data.find((c: any) => c.status == contract.status);
+      if (typeof entry === 'undefined') {
+        data.push({ status: contract.status, value: 1 });
+      } else {
+        entry.value++;
+      }
 
-    this.width = +this.svg.attr('width');
-    this.height = +this.svg.attr('height');
-    this.radius = Math.min(this.width, this.height) / 2;
+      console.log(data);
+    }
 
-    this.color = d3Scale
+    return data;
+  }
+
+  private initSvg(domSelector: string) {
+    //var domSelector = '#allContractsSVG';
+    var chart = new Chart();
+    chart.svg = d3.select(domSelector);
+
+    chart.width = +chart.svg.attr('width');
+    chart.height = +chart.svg.attr('height');
+    chart.radius = Math.min(chart.width, chart.height) / 2;
+
+    chart.color = d3Scale
       .scaleOrdinal()
       .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
 
-    this.arc = d3Shape
+    chart.arc = d3Shape
       .arc()
-      .outerRadius(this.radius - 10)
-      .innerRadius(this.radius - 70);
+      .outerRadius(chart.radius - 0)
+      .innerRadius(chart.radius - chart.radius / 2);
 
-    this.pie = d3Shape
+    chart.pie = d3Shape
       .pie()
       .sort(null)
-      .value((d: any) => d.population);
+      .value((d: any) => d.value);
 
-    this.svg = d3
-      .select('svg')
+    chart.svg = d3
+      .select(domSelector)
       .append('g')
-      .attr('transform', 'translate(' + this.width / 2 + ',' + this.height / 2 + ')');
+      .attr('transform', 'translate(' + chart.width / 2 + ',' + chart.height / 2 + ')');
+
+    return chart;
   }
 
-  private drawChart(data: any[]) {
-    let g = this.svg
+  private drawChart(domSelector: string, data: any[]) {
+    var chart = this.initSvg(domSelector);
+    let g = chart.svg
       .selectAll('.arc')
-      .data(this.pie(data))
+      .data(chart.pie(data))
       .enter()
       .append('g')
       .attr('class', 'arc');
 
     g.append('path')
-      .attr('d', this.arc)
-      .style('fill', (d: any) => this.color(d.data.age));
+      .attr('d', chart.arc)
+      .style('fill', (d: any) => chart.color(d.data.value));
 
     g.append('text')
-      .attr('transform', (d: any) => 'translate(' + this.arc.centroid(d) + ')')
-      .attr('dy', '.35em')
-      .text((d: any) => d.data.age);
+      .attr('transform', (d: any) => 'translate(' + chart.arc.centroid(d) + ')')
+      .attr('dy', '.45em')
+      .text((d: any) => d.data.status);
   }
 }

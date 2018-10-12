@@ -3,6 +3,10 @@ import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
 import { UserEntity } from '@app/user-entity';
 
+import { AuthenticationService } from '@app/core';
+import { ContractStatus } from '@app/contract-status.enum';
+import { ContractService } from '@app/contract.service';
+
 import * as d3 from 'd3-selection';
 import * as d3Scale from 'd3-scale';
 import * as d3Shape from 'd3-shape';
@@ -29,7 +33,7 @@ export class OverviewComponent implements OnInit {
 
   private g: any;
 
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {}
 
   ngOnInit() {
     var POPULATION = [

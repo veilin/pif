@@ -1,5 +1,7 @@
-export interface IContract {
+import { ContractStatus } from '@app/contract-status.enum';
 
+export interface IContract {
+  status: ContractStatus;
   id: number;
   value: number;
   name: string;
@@ -7,4 +9,7 @@ export interface IContract {
   description: string;
   lat: number;
   lng: number;
+  investor: string;
+  supplier: string;
+  mediator: string;
 }

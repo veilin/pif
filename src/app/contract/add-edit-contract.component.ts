@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
 import { UserEntity } from '@app/user-entity';
+import { AuthenticationService } from '@app/core';
+import { ContractStatus } from '@app/contract-status.enum';
 
 @Component({
   selector: 'app-add-edit-contract',
@@ -17,14 +19,18 @@ export class AddEditContractComponent implements OnInit {
     description: '',
     goal: '',
     lat: -23.84836,
-    lng: 29.391064
+    lng: 29.391064,
+    investor: '',
+    mediator: '',
+    supplier: '',
+    status: ContractStatus.New
   };
 
   @LocalStorage() contracts: IContract[] = [];
 
   @LocalStorage() users: UserEntity[] = [];
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   saveContract() {
@@ -39,6 +45,7 @@ export class AddEditContractComponent implements OnInit {
     }
 
     this.contract.id = this.contracts.length + 1;
+    this.contract.supplier = this.authenticationService.credentials.username;
 
     this.contracts.push(this.contract);
 

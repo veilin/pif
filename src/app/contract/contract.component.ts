@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
 import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
 import { UserEntity } from '@app/user-entity';
 import { UserType } from '@app/user-type.enum';
+import { AuthenticationService } from '@app/core';
+import { ContractStatus } from '@app/contract-status.enum';
 
 @Component({
   selector: 'app-contract',
@@ -13,52 +14,17 @@ import { UserType } from '@app/user-type.enum';
 export class ContractComponent implements OnInit {
   @LocalStorage() contracts: IContract[] = [];
 
+  myContracts: IContract[] = [];
+
   @LocalStorage() users: UserEntity[] = [];
 
-  constructor() {
+  username: string;
+  userType: UserType = undefined;
+
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
-
-    //this.contracts = [];
-
-    // if (this.contracts.findIndex((value) => {
-    //   if (value.id === 0) {
-    //     return true;
-    //   }
-    // }) === -1) {
-    //   this.contracts.push(
-    //     {
-    //       id: 0,
-    //       value: 10347.21,
-    //       description: 'This ia a dslkfhsdlkfhsdklflksdhfsdhflk kdsflk sdhflkh ' +
-    //         'sdlkhflsdkhfk sldhfkhs khdsfkh sdlkhfkl ' +
-    //         'sdhflhsdlkfh skldhfkl hsdlkfh sldkhf lsdkhfl khsd' +
-    //         'sdlkfjsd kjflksdj lkfjsdkljflk jsdkfj ksldjfskl dflsdhflksdufksdhfksdlkhf lkdshf d' +
-    //         'dsklf dlkjflksd jflkjs dlkjfsldk jflksdjf klsdjf lksdjf kljsdklfj ksldjfkl sdlkfj',
-    //       name: 'Funding for development of grain fermentation plant in rural Lynnwood',
-    //       goal: 'To drink beer',
-    //       lat: -23.84836,
-    //       lng: 29.391064
-    //     });
-    // }
-
-
-    //
-    // this.contracts.push({
-    //   id: 1,
-    //   value: 10347.21,
-    //   description: 'This ia a dslkfhsdlkfhsdklflksdhfsdhflk kdsflk sdhflkh
-    // sdlkhflsdkhfk sldhfkhs khdsfkh sdlkhfkl ' +
-    //     'sdhflhsdlkfh skldhfkl hsdlkfh sldkhf lsdkhfl khsd' +
-    //     'sdlkfjsd kjflksdj lkfjsdkljflk jsdkfj ksldjfskl dflsdhflksdufksdhfksdlkhf lkdshf d' +
-    //     'dsklf jsdlkfj lksdjflkjs dlkfjs dlkjflksd jflkjs
-    // dlkjfsldk jflksdjf klsdjf lksdjf kljsdklfj ksldjfkl sdlkfj',
-    //   name: 'This is a test',
-    //   goal: 'To uplift the local community',
-    //   lat: -23.84836,
-    //   lng: 29.391064
-    // });
 
     this.users = [
       {
@@ -70,18 +36,43 @@ export class ContractComponent implements OnInit {
         name: 'United Nations',
         login: 'kofi.anan@un.org',
         type: UserType.Investor
+      },
+      {
+        name: 'Operation Hunger',
+        login: 'op@hunger.org',
+        type: UserType.ThirdParty
+      },
+      {
+        name: 'Polokwane Rural Farmers Coop',
+        login: 'prfc@polokwane.org',
+        type: UserType.Supplier
       }];
+
+    this.username = this.authenticationService.credentials.username;
+    this.userType = this.users.filter((value) => {
+      return value.login === this.authenticationService.credentials.username;
+    }).pop().type;
+
+    this.myContracts = this.contracts.filter(o => {
+      if (o.investor === this.authenticationService.credentials.username) {
+        return true;
+      }
+      if (o.supplier === this.authenticationService.credentials.username) {
+        return true;
+      }
+      if (o.mediator === this.authenticationService.credentials.username) {
+        return true;
+      }
+    });
   }
 
   removeContract(contract: IContract) {
-    // const i = this.contracts.findIndex((value) => {
-    //   if (contract.id !== undefined && contract.id === value.id) {
-    //     return true;
-    //   }
-    // });
     this.contracts = this.contracts.filter(c => c.id !== contract.id);
+  }
 
-    // this.contracts = this.contracts.splice(i, 1);
+  invest(contract: IContract) {
+    contract.investor = this.authenticationService.credentials.username;
+    contract.status = ContractStatus.FundedAndAccepted;
   }
 
   trackContractById(index: number, contract: IContract) {

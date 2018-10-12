@@ -5,6 +5,7 @@ import { UserEntity } from '@app/user-entity';
 import { UserType } from '@app/user-type.enum';
 import { AuthenticationService } from '@app/core';
 import { ContractStatus } from '@app/contract-status.enum';
+import { ContractService } from '@app/contract.service';
 
 @Component({
   selector: 'app-contract',
@@ -12,82 +13,73 @@ import { ContractStatus } from '@app/contract-status.enum';
   styleUrls: ['./contract.component.scss']
 })
 export class ContractComponent implements OnInit {
-  @LocalStorage()
-  contracts: IContract[] = [];
-
   myContracts: IContract[] = [];
 
-  @LocalStorage()
-  users: UserEntity[] = [];
+  // @LocalStorage()
+  // users: UserEntity[] = [];
 
   username: string;
   userType: UserType = undefined;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {
   }
 
   ngOnInit() {
-    this.users = [
-      {
-        name: 'Exxaro Pty Ltd',
-        login: 'invest@exxaro.com',
-        type: UserType.Investor
-      },
-      {
-        name: 'United Nations',
-        login: 'kofi.anan@un.org',
-        type: UserType.Investor
-      },
-      {
-        name: 'Operation Hunger',
-        login: 'op@hunger.org',
-        type: UserType.ThirdParty
-      },
-      {
-        name: 'Polokwane Rural Farmers Coop',
-        login: 'prfc@polokwane.org',
-        type: UserType.Supplier
-      }
-    ];
 
     this.username = this.authenticationService.credentials.username;
-    this.userType = this.users
-      .filter(value => {
-        return value.login === this.authenticationService.credentials.username;
-      })
-      .pop().type;
-
-    this.myContracts = this.contracts.filter(o => {
-      if (o.investor === this.authenticationService.credentials.username) {
-        return true;
-      }
-      if (o.supplier === this.authenticationService.credentials.username) {
-        return true;
-      }
-      if (o.mediator === this.authenticationService.credentials.username) {
-        return true;
-      }
-    });
+    this.userType = this.authenticationService.getUserType(this.username);
+    this.myContracts = this.contractService.getMyContracts(this.authenticationService.credentials.username, this.userType);
   }
 
   removeContract(contract: IContract) {
-    this.contracts = this.contracts.filter(c => c.id !== contract.id);
+    this.contractService.removeContract(contract);
   }
 
   getName(contract: IContract) {
     if (contract.investor === undefined || contract.investor === '') {
       return 'Not yet funded';
     } else {
-      return this.users.find(u => u.login === contract.investor).name;
+      return this.authenticationService.users.find(u => u.login === contract.investor).name;
     }
   }
 
   invest(contract: IContract) {
     contract.investor = this.authenticationService.credentials.username;
     contract.status = ContractStatus.FundedAndAccepted;
+    this.contractService.update(contract);
+    this.myContracts = this.contractService.getMyContracts(
+      this.authenticationService.credentials.username,
+      this.userType);
+  }
+
+  startContract(contract: IContract) {
+    contract.status = ContractStatus.InProgress;
+    this.updateMyContract(contract);
+  }
+
+  deliverContract(contract: IContract) {
+    contract.status = ContractStatus.Delivered;
+    this.updateMyContract(contract);
+  }
+
+  verifyContract(contract: IContract) {
+    contract.status = ContractStatus.Verified;
+    this.updateMyContract(contract);
+    setTimeout(o => {
+        contract.status = ContractStatus.Paid;
+        this.updateMyContract(contract);
+      },
+      4000);
   }
 
   trackContractById(index: number, contract: IContract) {
     return contract.id;
+  }
+
+  private updateMyContract(contract: IContract) {
+    this.contractService.update(contract);
+    this.myContracts = this.contractService.getMyContracts(
+      this.authenticationService.credentials.username,
+      this.userType);
   }
 }

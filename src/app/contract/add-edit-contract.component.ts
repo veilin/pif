@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
-import { UserEntity } from '@app/user-entity';
 import { AuthenticationService } from '@app/core';
 import { ContractStatus } from '@app/contract-status.enum';
+import { UserType } from '@app/user-type.enum';
 
 @Component({
   selector: 'app-add-edit-contract',
@@ -28,10 +28,8 @@ export class AddEditContractComponent implements OnInit {
   @LocalStorage()
   contracts: IContract[] = [];
 
-  @LocalStorage()
-  users: UserEntity[] = [];
-
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) {
+  }
 
   saveContract() {
     const i = this.contracts.findIndex(value => {
@@ -52,5 +50,10 @@ export class AddEditContractComponent implements OnInit {
     history.back();
   }
 
-  ngOnInit() {}
+  getMediators() {
+    return this.authenticationService.users.filter(u => u.type === UserType.ThirdParty);
+  }
+
+  ngOnInit() {
+  }
 }

@@ -17,16 +17,15 @@ export class ContractComponent implements OnInit {
 
   myContracts: IContract[] = [];
 
-  @LocalStorage() users: UserEntity[] = [];
+  @LocalStorage()
+  users: UserEntity[] = [];
 
   username: string;
   userType: UserType = undefined;
 
-  constructor(private authenticationService: AuthenticationService) {
-  }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-
     this.users = [
       {
         name: 'Exxaro Pty Ltd',
@@ -47,12 +46,15 @@ export class ContractComponent implements OnInit {
         name: 'Polokwane Rural Farmers Coop',
         login: 'prfc@polokwane.org',
         type: UserType.Supplier
-      }];
+      }
+    ];
 
     this.username = this.authenticationService.credentials.username;
-    this.userType = this.users.filter((value) => {
-      return value.login === this.authenticationService.credentials.username;
-    }).pop().type;
+    this.userType = this.users
+      .filter(value => {
+        return value.login === this.authenticationService.credentials.username;
+      })
+      .pop().type;
 
     this.myContracts = this.contracts.filter(o => {
       if (o.investor === this.authenticationService.credentials.username) {

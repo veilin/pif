@@ -31,8 +31,7 @@ export class AddEditContractComponent implements OnInit {
   @LocalStorage()
   users: UserEntity[] = [];
 
-  constructor(private authenticationService: AuthenticationService) {
-  }
+  constructor(private authenticationService: AuthenticationService) {}
 
   saveContract() {
     const i = this.contracts.findIndex(value => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { QuoteService } from './quote.service';
-import { LocalStorage } from 'ngx-store';
+import { ContractService } from '@app/contract.service';
+import { IContract } from '@app/icontract';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +11,17 @@ import { LocalStorage } from 'ngx-store';
 export class HomeComponent implements OnInit {
   quote: string;
   isLoading: boolean;
-  lat = 51.678418;
-  lng = 7.809007;
+  // lat = 51.678418;
+  // lng = 7.809007;
 
-  constructor(private quoteService: QuoteService) {
-  }
+  lat = -23.851091;
+  lng = 29.369517;
+  contracts: IContract[] = [];
+
+  constructor(private contractService: ContractService) {}
 
   ngOnInit() {
     this.isLoading = true;
+    this.contracts = this.contractService.getAllContracts();
   }
 }

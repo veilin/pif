@@ -6,7 +6,9 @@
     </h2>
     <div>
       <agm-map [latitude]="lat" [longitude]="lng">
-        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        <agm-marker *ngFor="let contract of contracts"  [latitude]="contract.lat" [longitude]="contract.lng">
+          <div>sdfsdf</div>
+        </agm-marker>
       </agm-map>
     </div>
   </div>

@@ -36,28 +36,29 @@ export class OverviewComponent implements OnInit {
   private username: string;
   private userType: UserType = undefined;
 
-  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {}
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {
+  }
 
   ngOnInit() {
     this.username = this.authenticationService.credentials.username;
     this.userType = this.authenticationService.getUserType(this.username);
 
-    var allContracts = this.contractService.getAllContracts();
-    var allContractsChartData = this.extractChartData(allContracts);
+    const allContracts: IContract[] = this.contractService.getAllContracts();
+    const allContractsChartData: any = this.extractChartData(allContracts);
     this.drawChart('#allContractsSVG', allContractsChartData);
 
-    var myContracts = this.contractService.getMyContracts(
+    const myContracts = this.contractService.getMyContracts(
       this.authenticationService.credentials.username,
       this.userType
     );
-    var myContractsChartData = this.extractChartData(myContracts);
+    const myContractsChartData = this.extractChartData(myContracts);
     this.drawChart('#myContractsSVG', myContractsChartData);
   }
 
   private extractChartData(contracts: IContract[]) {
-    var data: any = [];
-    for (let contract of contracts) {
-      var entry: any = data.find((c: any) => c.status == contract.status);
+    const data: any = [];
+    for (const contract of contracts) {
+      const entry: any = data.find((c: any) => c.status == contract.status);
       if (typeof entry === 'undefined') {
         data.push({ status: contract.status, value: 1 });
       } else {
@@ -71,8 +72,8 @@ export class OverviewComponent implements OnInit {
   }
 
   private initSvg(domSelector: string) {
-    //var domSelector = '#allContractsSVG';
-    var chart = new Chart();
+    // var domSelector = '#allContractsSVG';
+    const chart = new Chart();
     chart.svg = d3.select(domSelector);
 
     chart.width = +chart.svg.attr('width');
@@ -102,7 +103,7 @@ export class OverviewComponent implements OnInit {
   }
 
   private drawChart(domSelector: string, data: any[]) {
-    var chart = this.initSvg(domSelector);
+    const chart = this.initSvg(domSelector);
     let g = chart.svg
       .selectAll('.arc')
       .data(chart.pie(data))
@@ -116,7 +117,7 @@ export class OverviewComponent implements OnInit {
 
     g.append('text')
       .attr('transform', (d: any) => 'translate(' + chart.arc.centroid(d) + ')')
-      .attr('dy', '.45em')
+      .attr('dy', '.25em')
       .text((d: any) => d.data.status);
   }
 }

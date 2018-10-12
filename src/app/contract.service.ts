@@ -10,7 +10,8 @@ export class ContractService {
   @LocalStorage()
   private contracts: IContract[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   getMyContracts(username: string, userType: UserType): IContract[] {
     return this.contracts.filter(o => {
@@ -22,6 +23,14 @@ export class ContractService {
       }
       if (o.mediator === username) {
         return true;
+      }
+    }).sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      } else if (a.name > b.name) {
+        return 1;
+      } else {
+        return 0;
       }
     });
   }
@@ -41,12 +50,22 @@ export class ContractService {
       this.contracts.splice(i, 1);
     }
 
-    contract.id = this.contracts.length + 1;
+    if (contract.id === undefined || contract.id === null) {
+      contract.id = this.contracts.length + 1;
+    }
 
     this.contracts.push(contract);
   }
 
   getAllContracts() {
-    return this.contracts;
+    return this.contracts.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      } else if (a.name > b.name) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
   }
 }

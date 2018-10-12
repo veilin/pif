@@ -28,7 +28,8 @@ export class ContractComponent implements OnInit {
 
     this.username = this.authenticationService.credentials.username;
     this.userType = this.authenticationService.getUserType(this.username);
-    this.myContracts = this.contractService.getMyContracts(this.authenticationService.credentials.username, this.userType);
+    this.myContracts = this.contractService.getMyContracts(this.authenticationService.credentials.username,
+      this.userType);
   }
 
   removeContract(contract: IContract) {

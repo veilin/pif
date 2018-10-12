@@ -46,4 +46,8 @@ export class ContractService {
 
     this.contracts.push(contract);
   }
+
+  getAllContracts() {
+    return this.contracts;
+  }
 }

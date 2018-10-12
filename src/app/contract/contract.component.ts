@@ -12,7 +12,8 @@ import { ContractStatus } from '@app/contract-status.enum';
   styleUrls: ['./contract.component.scss']
 })
 export class ContractComponent implements OnInit {
-  @LocalStorage() contracts: IContract[] = [];
+  @LocalStorage()
+  contracts: IContract[] = [];
 
   myContracts: IContract[] = [];
 

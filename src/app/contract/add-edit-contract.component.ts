@@ -11,11 +11,10 @@ import { ContractStatus } from '@app/contract-status.enum';
   styleUrls: ['./add-edit-contract.component.scss']
 })
 export class AddEditContractComponent implements OnInit {
-
   contract: IContract = {
     id: undefined,
     name: '',
-    value: 1000.00,
+    value: 1000.0,
     description: '',
     goal: '',
     lat: -23.84836,
@@ -26,15 +25,17 @@ export class AddEditContractComponent implements OnInit {
     status: ContractStatus.New
   };
 
-  @LocalStorage() contracts: IContract[] = [];
+  @LocalStorage()
+  contracts: IContract[] = [];
 
-  @LocalStorage() users: UserEntity[] = [];
+  @LocalStorage()
+  users: UserEntity[] = [];
 
   constructor(private authenticationService: AuthenticationService) {
   }
 
   saveContract() {
-    const i = this.contracts.findIndex((value) => {
+    const i = this.contracts.findIndex(value => {
       if (this.contract.id !== undefined && this.contract.id === value.id) {
         return true;
       }
@@ -50,10 +51,7 @@ export class AddEditContractComponent implements OnInit {
     this.contracts.push(this.contract);
 
     history.back();
-
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

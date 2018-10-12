@@ -10,8 +10,7 @@ const routes: Routes = [
   Shell.childRoutes([
     { path: 'contract', component: ContractComponent, data: { title: extract('My Proposals') } },
     { path: 'add-contract', component: AddEditContractComponent, data: { title: extract('Add proposal') } }
-    ])
-
+  ])
 ];
 
 @NgModule({

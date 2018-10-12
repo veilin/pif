@@ -23,7 +23,8 @@ export class ContractComponent implements OnInit {
   username: string;
   userType: UserType = undefined;
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit() {
     this.users = [
@@ -71,6 +72,14 @@ export class ContractComponent implements OnInit {
 
   removeContract(contract: IContract) {
     this.contracts = this.contracts.filter(c => c.id !== contract.id);
+  }
+
+  getName(contract: IContract) {
+    if (contract.investor === undefined || contract.investor === '') {
+      return 'Not yet funded';
+    } else {
+      return this.users.find(u => u.login === contract.investor).name;
+    }
   }
 
   invest(contract: IContract) {

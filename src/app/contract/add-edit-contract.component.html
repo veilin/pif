@@ -4,7 +4,6 @@
       <span translate>Register Proposal</span>
       <hr/>
     </h1>
-
     <div>
       <div class="card card-default">
         <div class="card-header">
@@ -106,8 +105,8 @@
               <div class="col-md-12 col-lg-12">
                 <div class="form-group">
                   <label class="control-label">Chosen mediator</label>
-                  <select class="form-control">
-                    <option *ngFor="let user of users" value={{user.login}}>{{user.name}}</option>
+                  <select class="form-control" [(ngModel)]="contract.mediator" >
+                    <option *ngFor="let user of getMediators()" value={{user.login}}>{{user.name}}</option>
                   </select>
                 </div>
               </div>

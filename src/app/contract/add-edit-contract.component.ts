@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IContract } from '@app/icontract';
 import { LocalStorage } from 'ngx-store';
-import { UserEntity } from '@app/user-entity';
 import { AuthenticationService } from '@app/core';
 import { ContractStatus } from '@app/contract-status.enum';
+import { UserType } from '@app/user-type.enum';
+import { ContractService } from '@app/contract.service';
 
 @Component({
   selector: 'app-add-edit-contract',
@@ -25,32 +26,20 @@ export class AddEditContractComponent implements OnInit {
     status: ContractStatus.New
   };
 
-  @LocalStorage()
-  contracts: IContract[] = [];
-
-  @LocalStorage()
-  users: UserEntity[] = [];
-
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {
+  }
 
   saveContract() {
-    const i = this.contracts.findIndex(value => {
-      if (this.contract.id !== undefined && this.contract.id === value.id) {
-        return true;
-      }
-    });
-
-    if (i !== -1) {
-      this.contracts.splice(i, 1);
-    }
-
-    this.contract.id = this.contracts.length + 1;
+    this.contract.id = this.contractService.getAllContracts().length + 1;
     this.contract.supplier = this.authenticationService.credentials.username;
-
-    this.contracts.push(this.contract);
-
+    this.contractService.update(this.contract);
     history.back();
   }
 
-  ngOnInit() {}
+  getMediators() {
+    return this.authenticationService.users.filter(u => u.type === UserType.ThirdParty);
+  }
+
+  ngOnInit() {
+  }
 }

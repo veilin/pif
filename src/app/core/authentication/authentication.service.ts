@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { UserType } from '@app/user-type.enum';
+import { UserEntity } from '@app/user-entity';
 
 export interface Credentials {
   // Customize received credentials here
@@ -21,6 +23,30 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
+
+  users: UserEntity[] = [
+    {
+      name: 'Exxaro Pty Ltd',
+      login: 'invest@exxaro.com',
+      type: UserType.Investor
+    },
+    {
+      name: 'United Nations',
+      login: 'kofi.anan@un.org',
+      type: UserType.Investor
+    },
+    {
+      name: 'Operation Hunger',
+      login: 'op@hunger.org',
+      type: UserType.ThirdParty
+    },
+    {
+      name: 'Polokwane Rural Farmers Coop',
+      login: 'prfc@polokwane.org',
+      type: UserType.Supplier
+    }
+  ];
+
   private _credentials: Credentials | null;
 
   constructor() {
@@ -71,6 +97,14 @@ export class AuthenticationService {
     return this._credentials;
   }
 
+  getUserType(username: string) {
+    return this.users
+      .filter(value => {
+        return value.login === username;
+      })
+      .pop().type;
+  }
+
   /**
    * Sets the user credentials.
    * The credentials may be persisted across sessions by setting the `remember` parameter to true.
@@ -89,4 +123,6 @@ export class AuthenticationService {
       localStorage.removeItem(credentialsKey);
     }
   }
+
+
 }

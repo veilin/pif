@@ -21,15 +21,15 @@ export class ContractComponent implements OnInit {
   username: string;
   userType: UserType = undefined;
 
-  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {
-  }
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {}
 
   ngOnInit() {
-
     this.username = this.authenticationService.credentials.username;
     this.userType = this.authenticationService.getUserType(this.username);
-    this.myContracts = this.contractService.getMyContracts(this.authenticationService.credentials.username,
-      this.userType);
+    this.myContracts = this.contractService.getMyContracts(
+      this.authenticationService.credentials.username,
+      this.userType
+    );
   }
 
   removeContract(contract: IContract) {
@@ -50,7 +50,8 @@ export class ContractComponent implements OnInit {
     this.contractService.update(contract);
     this.myContracts = this.contractService.getMyContracts(
       this.authenticationService.credentials.username,
-      this.userType);
+      this.userType
+    );
   }
 
   startContract(contract: IContract) {
@@ -67,10 +68,9 @@ export class ContractComponent implements OnInit {
     contract.status = ContractStatus.Verified;
     this.updateMyContract(contract);
     setTimeout(o => {
-        contract.status = ContractStatus.Paid;
-        this.updateMyContract(contract);
-      },
-      4000);
+      contract.status = ContractStatus.Paid;
+      this.updateMyContract(contract);
+    }, 4000);
   }
 
   trackContractById(index: number, contract: IContract) {
@@ -81,6 +81,7 @@ export class ContractComponent implements OnInit {
     this.contractService.update(contract);
     this.myContracts = this.contractService.getMyContracts(
       this.authenticationService.credentials.username,
-      this.userType);
+      this.userType
+    );
   }
 }

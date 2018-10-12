@@ -1,6 +1,13 @@
-<div class="container-fluid">
-  <div class="text-center">
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map> </div>
+<div class="container-fluid pl-5 pr-2 ml">
+  <div class="pagehead">
+    <h2>
+      <span translate>Project Proposals</span>
+      <hr/>
+    </h2>
+    <div>
+      <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
 </div>

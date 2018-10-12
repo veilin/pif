@@ -23,7 +23,6 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
-
   users: UserEntity[] = [
     {
       name: 'Exxaro Pty Ltd',
@@ -123,6 +122,4 @@ export class AuthenticationService {
       localStorage.removeItem(credentialsKey);
     }
   }
-
-
 }

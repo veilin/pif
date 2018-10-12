@@ -10,8 +10,7 @@ export class ContractService {
   @LocalStorage()
   private contracts: IContract[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   getMyContracts(username: string, userType: UserType): IContract[] {
     return this.contracts.filter(o => {

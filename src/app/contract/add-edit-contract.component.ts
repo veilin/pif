@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IContract } from '@app/icontract';
-import { LocalStorage } from 'ngx-store';
 import { AuthenticationService } from '@app/core';
 import { ContractStatus } from '@app/contract-status.enum';
 import { UserType } from '@app/user-type.enum';
@@ -26,8 +25,7 @@ export class AddEditContractComponent implements OnInit {
     status: ContractStatus.New
   };
 
-  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {
-  }
+  constructor(private authenticationService: AuthenticationService, private contractService: ContractService) {}
 
   saveContract() {
     this.contract.id = this.contractService.getAllContracts().length + 1;
@@ -40,6 +38,5 @@ export class AddEditContractComponent implements OnInit {
     return this.authenticationService.users.filter(u => u.type === UserType.ThirdParty);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
